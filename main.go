@@ -44,7 +44,7 @@ func main() {
 		apiv1.GET("/article/:id", middleware.AuthorizeJWT(jwtService), articleController.FindById)
 		apiv1.DELETE("/article/:id", middleware.AuthorizeJWT(jwtService), articleController.Delete)
 		// image
-		apiv1.POST("/image", imageController.UploadImage)
+		apiv1.POST("/image", middleware.AuthorizeJWT(jwtService), imageController.UploadImage)
 
 	}
 

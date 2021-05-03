@@ -7,6 +7,7 @@ import (
 	"github.com/zaenalarifin12/golang_article/service"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func AuthorizeJWT(jwtService service.JWTService) gin.HandlerFunc {
@@ -19,7 +20,10 @@ func AuthorizeJWT(jwtService service.JWTService) gin.HandlerFunc {
 			return
 		}
 
-		token, err := jwtService.ValidateToken(authHeader)
+
+		splitedAuthHeader := strings.Fields(authHeader)
+		tokenAuth := strings.Join(splitedAuthHeader[1:], "")
+		token, err := jwtService.ValidateToken(tokenAuth)
 
 		if token.Valid {
 			claims := token.Claims.(jwt.MapClaims)
